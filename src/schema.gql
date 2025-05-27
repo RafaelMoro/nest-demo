@@ -1,0 +1,29 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Videogame model"""
+type VideogameGqlModel {
+  _id: ID!
+
+  """Videogame name"""
+  name: String!
+
+  """Videogame description"""
+  description: String!
+
+  """Videogame price"""
+  price: Float!
+  platform: [String!]!
+}
+
+type Query {
+  videogames: [VideogameGqlModel!]!
+  videogame(name: String!): VideogameGqlModel
+}
+
+type Mutation {
+  addVideogame(name: String!, description: String!, price: String!, platform: [String!]!): VideogameGqlModel!
+  editVideogame(videogameId: ID!, name: String, description: String, price: String, platform: [String!]): VideogameGqlModel
+  deleteVideogame(videogameId: String!): VideogameGqlModel!
+}

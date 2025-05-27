@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Videogame } from '../entities/videogames.entity';
-import { CreateVideogameDto } from '../dtos/videogames.dto';
+import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
 
 @Injectable()
 export class VideogamesService {
@@ -26,11 +24,50 @@ export class VideogamesService {
     }
   }
 
+  async getSingleVideogame(name: string) {
+    try {
+      const videogames = await this.videogameModel.find({ name }).exec();
+      if (videogames.length === 0) {
+        return null;
+      }
+      const [videogame] = videogames;
+      return videogame;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
   async createVideogame(data: CreateVideogameDto) {
     try {
       const model = new this.videogameModel(data);
       const modelSaved = await model.save();
       return modelSaved;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async updateVideogame(id: string, data: UpdateVideogameDto) {
+    try {
+      const videogame = await this.videogameModel
+        .findByIdAndUpdate(id, { $set: data }, { new: true })
+        .exec();
+      if (!videogame) {
+        return null;
+      }
+      return videogame;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async deleteVideogame(id: string) {
+    try {
+      const videogame = await this.videogameModel.findByIdAndDelete(id).exec();
+      if (!videogame) {
+        return null;
+      }
+      return videogame;
     } catch (error) {
       throw new BadRequestException(error.message);
     }

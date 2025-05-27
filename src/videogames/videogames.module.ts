@@ -6,6 +6,7 @@ import { VideogamesController } from './controller/videogames.controller';
 import { VideogamesService } from './services/videogames.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Videogame, VideogameSchema } from './entities/videogames.entity';
+import { VideogameResolvers } from './videogames.resolver';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { Videogame, VideogameSchema } from './entities/videogames.entity';
     ]),
   ],
   controllers: [VideogamesController],
-  providers: [VideogamesService],
+  providers: [VideogamesService, VideogameResolvers],
 })
 export class VideogamesModule {}
