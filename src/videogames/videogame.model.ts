@@ -1,16 +1,19 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, ID } from '@nestjs/graphql';
 
-@ObjectType()
+@ObjectType({ description: 'Videogame model' })
 export class VideogameGqlModel {
-  @Field()
+  @Field((type) => ID)
   _id: number;
 
-  @Field({ nullable: true, description: 'Videogame name' })
+  @Field({ description: 'Videogame name' })
   name: string;
 
-  @Field({ nullable: true, description: 'Videogame description' })
+  @Field({ description: 'Videogame description' })
   description: string;
 
-  @Field({ nullable: true, description: 'Videogame price' })
+  @Field({ description: 'Videogame price' })
   price: number;
+
+  @Field((type) => [String])
+  platform: string[];
 }
