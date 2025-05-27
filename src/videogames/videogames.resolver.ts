@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Query, Resolver } from '@nestjs/graphql';
 import { VideogameGqlModel } from './videogame.model';
 import { VideogamesService } from './services/videogames.service';
 
@@ -7,9 +8,10 @@ import { VideogamesService } from './services/videogames.service';
 export class VideogameResolvers {
   constructor(private videogameServide: VideogamesService) {}
 
-  @Query(() => VideogameGqlModel)
-  async videogame() {
-    return this.videogameServide.findAllVideogames();
+  @Query((returns) => [VideogameGqlModel])
+  async videogames() {
+    const data = await this.videogameServide.findAllVideogames();
+    return data;
   }
 
   // @ResolveField()
