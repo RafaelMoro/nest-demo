@@ -25,4 +25,5 @@ type Query {
 type Mutation {
   addVideogame(name: String!, description: String!, price: String!, platform: [String!]!): VideogameGqlModel!
   editVideogame(videogameId: ID!, name: String, description: String, price: String, platform: [String!]): VideogameGqlModel
+  deleteVideogame(videogameId: String!): VideogameGqlModel!
 }
