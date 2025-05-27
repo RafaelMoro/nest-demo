@@ -1,4 +1,4 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { ArgsType, Field, ID } from '@nestjs/graphql';
 
 @ArgsType()
 export class CreateVideogameArgs {
@@ -12,5 +12,23 @@ export class CreateVideogameArgs {
   price: string;
 
   @Field((type) => [String])
+  platform: string[];
+}
+
+@ArgsType()
+export class EditVideogameArgs {
+  @Field(() => ID)
+  videogameId: string;
+
+  @Field({ nullable: true })
+  name: string;
+
+  @Field({ nullable: true })
+  description: string;
+
+  @Field({ nullable: true })
+  price: string;
+
+  @Field(() => [String], { nullable: true })
   platform: string[];
 }
