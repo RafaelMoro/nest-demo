@@ -1,23 +1,27 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { VideogameGqlModel } from './videogame.model';
 import { VideogamesService } from './services/videogames.service';
+import { CreateVideogameArgs } from './videogames.args';
 
 @Resolver((of) => VideogameGqlModel)
 export class VideogameResolvers {
-  constructor(private videogameServide: VideogamesService) {}
+  constructor(private videogameService: VideogamesService) {}
 
   @Query((returns) => [VideogameGqlModel])
   async videogames() {
-    const data = await this.videogameServide.findAllVideogames();
+    const data = await this.videogameService.findAllVideogames();
     return data;
   }
 
   @Query((returns) => VideogameGqlModel, { name: 'videogame', nullable: true })
   async getVideogame(@Args('name') name: string) {
-    const videogame = await this.videogameServide.getSingleVideogame(name);
+    const videogame = await this.videogameService.getSingleVideogame(name);
     return videogame;
+  }
+
+  @Mutation(() => VideogameGqlModel, { name: 'addVideogame' })
+  async createVideogame(@Args() args: CreateVideogameArgs) {
+    return this.videogameService.createVideogame(args);
   }
 
   // @ResolveField()
