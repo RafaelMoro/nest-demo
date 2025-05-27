@@ -2,19 +2,21 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Videogame model"""
 type VideogameGqlModel {
-  _id: Float!
+  _id: ID!
 
   """Videogame name"""
-  name: String
+  name: String!
 
   """Videogame description"""
-  description: String
+  description: String!
 
   """Videogame price"""
-  price: Float
+  price: Float!
+  platform: [String!]!
 }
 
 type Query {
-  videogame: VideogameGqlModel!
+  videogames: [VideogameGqlModel!]!
 }
