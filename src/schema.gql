@@ -21,3 +21,7 @@ type Query {
   videogames: [VideogameGqlModel!]!
   videogame(name: String!): VideogameGqlModel
 }
+
+type Mutation {
+  addVideogame(name: String!, description: String!, price: String!, platform: [String!]!): VideogameGqlModel!
+}
