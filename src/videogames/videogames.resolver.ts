@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { VideogameGqlModel } from './videogame.model';
 import { VideogamesService } from './services/videogames.service';
-import { CreateVideogameArgs } from './videogames.args';
+import { CreateVideogameArgs, EditVideogameArgs } from './videogames.args';
 
 @Resolver((of) => VideogameGqlModel)
 export class VideogameResolvers {
@@ -22,6 +22,12 @@ export class VideogameResolvers {
   @Mutation(() => VideogameGqlModel, { name: 'addVideogame' })
   async createVideogame(@Args() args: CreateVideogameArgs) {
     return this.videogameService.createVideogame(args);
+  }
+
+  @Mutation(() => VideogameGqlModel, { name: 'editVideogame', nullable: true })
+  async editVideogame(@Args() args: EditVideogameArgs) {
+    const { videogameId } = args;
+    return this.videogameService.updateVideogame(videogameId, args);
   }
 
   // @ResolveField()
