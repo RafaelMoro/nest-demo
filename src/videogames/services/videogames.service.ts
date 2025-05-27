@@ -60,4 +60,16 @@ export class VideogamesService {
       throw new BadRequestException(error.message);
     }
   }
+
+  async deleteVideogame(id: string) {
+    try {
+      const videogame = await this.videogameModel.findByIdAndDelete(id).exec();
+      if (!videogame) {
+        return null;
+      }
+      return videogame;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
 }

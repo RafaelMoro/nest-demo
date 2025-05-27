@@ -30,6 +30,11 @@ export class VideogameResolvers {
     return this.videogameService.updateVideogame(videogameId, args);
   }
 
+  @Mutation(() => VideogameGqlModel, { name: 'deleteVideogame' })
+  async deleteVideogame(@Args('videogameId') videogameId: string) {
+    return this.videogameService.deleteVideogame(videogameId);
+  }
+
   // @ResolveField()
   // async posts(@Parent() author: Author) {
   //   const { id } = author;
