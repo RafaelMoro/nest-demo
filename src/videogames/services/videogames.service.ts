@@ -49,10 +49,12 @@ export class VideogamesService {
 
   async updateVideogame(id: string, data: UpdateVideogameDto) {
     try {
-      const videogame = this.videogameModel
+      const videogame = await this.videogameModel
         .findByIdAndUpdate(id, { $set: data }, { new: true })
         .exec();
-      console.log('videogame', videogame);
+      if (!videogame) {
+        return null;
+      }
       return videogame;
     } catch (error) {
       throw new BadRequestException(error.message);
