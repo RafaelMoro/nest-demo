@@ -1,0 +1,20 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type VideogameGqlModel {
+  _id: Float!
+
+  """Videogame name"""
+  name: String
+
+  """Videogame description"""
+  description: String
+
+  """Videogame price"""
+  price: Float
+}
+
+type Query {
+  videogame: VideogameGqlModel!
+}
