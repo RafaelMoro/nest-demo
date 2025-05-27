@@ -28,6 +28,7 @@ import config from './config';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      graphiql: true,
     }),
     DatabaseModule,
     VideogamesModule,
