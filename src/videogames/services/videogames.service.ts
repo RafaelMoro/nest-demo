@@ -26,6 +26,19 @@ export class VideogamesService {
     }
   }
 
+  async getSingleVideogame(name: string) {
+    try {
+      const videogames = await this.videogameModel.find({ name }).exec();
+      if (videogames.length === 0) {
+        return null;
+      }
+      const [videogame] = videogames;
+      return videogame;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
   async createVideogame(data: CreateVideogameDto) {
     try {
       const model = new this.videogameModel(data);
