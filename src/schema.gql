@@ -19,4 +19,5 @@ type VideogameGqlModel {
 
 type Query {
   videogames: [VideogameGqlModel!]!
+  videogame(name: String!): VideogameGqlModel
 }
