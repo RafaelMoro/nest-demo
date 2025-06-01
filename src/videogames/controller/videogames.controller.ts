@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { VideogamesService } from '../services/videogames.service';
 import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
 
@@ -24,5 +32,10 @@ export class VideogamesController {
   @Put()
   async editVideogame(@Body() payload: UpdateVideogameDto) {
     return this.videogameService.updateVideogame(payload);
+  }
+
+  @Delete(':videogameId')
+  async deleteVideogame(@Param('videogameId') videogameId: string) {
+    return this.videogameService.deleteVideogame(videogameId);
   }
 }
