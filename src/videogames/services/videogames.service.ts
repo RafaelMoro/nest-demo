@@ -41,10 +41,10 @@ export class VideogamesService {
     }
   }
 
-  async createVideogame(data: CreateVideogameDto) {
+  async createVideogame(data: CreateVideogameDto): Promise<VideogameDoc> {
     try {
       const model = new this.videogameModel(data);
-      const modelSaved = await model.save();
+      const modelSaved: VideogameDoc = await model.save();
       return modelSaved;
     } catch (error) {
       throw new BadRequestException(error.message);
