@@ -119,4 +119,19 @@ describe('VideogamesService', () => {
     const response = await service.updateVideogame(payload);
     expect(response).toBe(result);
   });
+
+  it('updateVideogame service should return a null if no videogame found', async () => {
+    const payload: UpdateVideogameDto = {
+      videogameId: '683525f9815326432e6ea8cc',
+      description: 'A thriller videogame with zombies and a lot of action',
+    };
+    const result = null;
+
+    jest
+      .spyOn(service, 'updateVideogame')
+      // eslint-disable-next-line @typescript-eslint/require-await
+      .mockImplementation(async () => result);
+    const response = await service.updateVideogame(payload);
+    expect(response).toBe(result);
+  });
 });
