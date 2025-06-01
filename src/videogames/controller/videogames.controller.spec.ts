@@ -23,6 +23,10 @@ describe('VideogamesController', () => {
     videogamesService = module.get<VideogamesService>(VideogamesService);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Get all videogames', async () => {
     const result = [
       {
@@ -40,5 +44,24 @@ describe('VideogamesController', () => {
       .mockImplementation(async () => result);
 
     expect(await videogamesController.getAllVideogames()).toBe(result);
+  });
+
+  it('Get single videogame', async () => {
+    const result = {
+      _id: '68351afb0e685e9fe702e63b',
+      name: 'The last of us',
+      description: 'A thriller videogame with zombies and a lot of action',
+      price: 1200,
+      platform: ['xbox series x', 'playstatiuon 5'],
+    } as unknown as VideogameDoc;
+
+    jest
+      .spyOn(videogamesService, 'getSingleVideogame')
+      // eslint-disable-next-line @typescript-eslint/require-await
+      .mockImplementation(async () => result);
+
+    expect(
+      await videogamesController.getSingleVideogame('The last of us'),
+    ).toBe(result);
   });
 });
