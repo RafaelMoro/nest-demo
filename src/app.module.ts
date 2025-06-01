@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { VideogamesModule } from './videogames/videogames.module';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 import config from './config';
 
 @Module({
@@ -36,6 +37,7 @@ import config from './config';
     DatabaseModule,
     VideogamesModule,
     AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
