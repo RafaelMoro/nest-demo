@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { VideogamesService } from './videogames.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Videogame, VideogameDoc } from '../entities/videogames.entity';
+import { CreateVideogameDto } from '../dtos/videogames.dto';
 
 describe('VideogamesService', () => {
   let service: VideogamesService;
@@ -72,6 +73,29 @@ describe('VideogamesService', () => {
       // eslint-disable-next-line @typescript-eslint/require-await
       .mockImplementation(async () => result);
     const response = await service.getSingleVideogame('The last of us');
+    expect(response).toBe(result);
+  });
+
+  it('createVideogame service should return a videogame', async () => {
+    const payload: CreateVideogameDto = {
+      name: 'The last of us',
+      description: 'A thriller videogame with zombies and a lot of action',
+      price: '1200',
+      platform: ['xbox series x', 'playstatiuon 5'],
+    };
+    const result = {
+      _id: '68351afb0e685e9fe702e63b',
+      name: 'The last of us',
+      description: 'A thriller videogame with zombies and a lot of action',
+      price: 1200,
+      platform: ['xbox series x', 'playstatiuon 5'],
+    } as unknown as VideogameDoc;
+
+    jest
+      .spyOn(service, 'createVideogame')
+      // eslint-disable-next-line @typescript-eslint/require-await
+      .mockImplementation(async () => result);
+    const response = await service.createVideogame(payload);
     expect(response).toBe(result);
   });
 });
