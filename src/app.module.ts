@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { VideogamesModule } from './videogames/videogames.module';
+import { AuthModule } from './auth/auth.module';
 import config from './config';
 
 @Module({
@@ -32,6 +33,7 @@ import config from './config';
     }),
     DatabaseModule,
     VideogamesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
