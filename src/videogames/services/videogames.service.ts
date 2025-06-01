@@ -68,12 +68,11 @@ export class VideogamesService {
     }
   }
 
-  async deleteVideogame(id: string) {
+  async deleteVideogame(id: string): Promise<VideogameDoc | null> {
     try {
-      const videogame = await this.videogameModel.findByIdAndDelete(id).exec();
-      if (!videogame) {
-        return null;
-      }
+      const videogame: VideogameDoc | null = await this.videogameModel
+        .findByIdAndDelete(id)
+        .exec();
       return videogame;
     } catch (error) {
       throw new BadRequestException(error.message);
