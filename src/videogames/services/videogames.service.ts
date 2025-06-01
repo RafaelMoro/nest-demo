@@ -3,7 +3,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Videogame } from '../entities/videogames.entity';
+import { Videogame, VideogameDoc } from '../entities/videogames.entity';
 import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
 
 @Injectable()
@@ -12,11 +12,13 @@ export class VideogamesService {
     @InjectModel(Videogame.name) private videogameModel: Model<Videogame>,
   ) {}
 
-  async findAllVideogames() {
+  async findAllVideogames(): Promise<VideogameDoc[]> {
     try {
-      const videogames = await this.videogameModel.find().exec();
+      const videogames: VideogameDoc[] = await this.videogameModel
+        .find()
+        .exec();
       if (!videogames) {
-        return 'No videogames found';
+        return [];
       }
       return videogames;
     } catch (error) {
