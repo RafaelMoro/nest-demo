@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { VideogamesService } from '../services/videogames.service';
 import { CreateVideogameDto } from '../dtos/videogames.dto';
 
@@ -10,6 +9,11 @@ export class VideogamesController {
   @Get()
   async getAllVideogames() {
     return this.videogameService.findAllVideogames();
+  }
+
+  @Get(':name')
+  async getSingleVideogame(@Param('name') name: string) {
+    return this.videogameService.getSingleVideogame(name);
   }
 
   @Post()
