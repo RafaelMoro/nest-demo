@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { VideogamesService } from '../services/videogames.service';
-import { CreateVideogameDto } from '../dtos/videogames.dto';
+import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
 
 @Controller('videogames')
 export class VideogamesController {
@@ -19,5 +19,10 @@ export class VideogamesController {
   @Post()
   async createOneVideogame(@Body() payload: CreateVideogameDto) {
     return this.videogameService.createVideogame(payload);
+  }
+
+  @Put()
+  async editVideogame(@Body() payload: UpdateVideogameDto) {
+    return this.videogameService.updateVideogame(payload);
   }
 }
