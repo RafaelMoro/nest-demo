@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateVideogameDto {
   @IsString()
@@ -18,4 +18,8 @@ export class CreateVideogameDto {
   @IsNotEmpty()
   readonly platform: string[];
 }
-export class UpdateVideogameDto extends PartialType(CreateVideogameDto) {}
+export class UpdateVideogameDto extends PartialType(CreateVideogameDto) {
+  @IsMongoId()
+  @IsNotEmpty()
+  readonly videogameId: string;
+}
