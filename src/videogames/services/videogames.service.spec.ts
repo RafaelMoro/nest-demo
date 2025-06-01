@@ -151,4 +151,15 @@ describe('VideogamesService', () => {
     const response = await service.deleteVideogame('68351afb0e685e9fe702e63b');
     expect(response).toBe(result);
   });
+
+  it('deleteVideogame service should return a null if not found', async () => {
+    const result = null;
+
+    jest
+      .spyOn(service, 'deleteVideogame')
+      // eslint-disable-next-line @typescript-eslint/require-await
+      .mockImplementation(async () => result);
+    const response = await service.deleteVideogame('68351afb0e685e9fe702e63b');
+    expect(response).toBe(result);
+  });
 });
