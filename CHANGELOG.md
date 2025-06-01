@@ -1,3 +1,9 @@
+## v0.3.0 (2025-06-01)
+
+### Pull Requests
+[#3](https://github.com/RafaelMoro/nest-demo/pull/3) | Add unit tests
+
+
 ## v0.2.0 (2025-05-27)
 
 ### Pull Requests
