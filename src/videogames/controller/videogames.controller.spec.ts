@@ -113,4 +113,24 @@ describe('VideogamesController', () => {
 
     expect(await videogamesController.editVideogame(payload)).toBe(result);
   });
+
+  it('Delete videogame', async () => {
+    const result = {
+      name: 'Horizon forbidden west edited',
+      description: 'The second deliver of horizon series for ps5 only',
+      price: 1600,
+      platform: ['playstatiuon 5'],
+      _id: '683525f9815326432e6ea8cc',
+      __v: 0,
+    } as unknown as VideogameDoc;
+
+    jest
+      .spyOn(videogamesService, 'deleteVideogame')
+      // eslint-disable-next-line @typescript-eslint/require-await
+      .mockImplementation(async () => result);
+
+    expect(
+      await videogamesController.deleteVideogame('683525f9815326432e6ea8cc'),
+    ).toBe(result);
+  });
 });
