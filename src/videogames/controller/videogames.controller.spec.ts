@@ -4,7 +4,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { VideogamesController } from './videogames.controller';
 import { VideogamesService } from '../services/videogames.service';
 import { Videogame, VideogameDoc } from '../entities/videogames.entity';
-import { CreateVideogameDto } from '../dtos/videogames.dto';
+import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
 
 describe('VideogamesController', () => {
   let videogamesController: VideogamesController;
@@ -89,5 +89,28 @@ describe('VideogamesController', () => {
       .mockImplementation(async () => result);
 
     expect(await videogamesController.createOneVideogame(payload)).toBe(result);
+  });
+
+  it('Edit videogame', async () => {
+    const payload: UpdateVideogameDto = {
+      videogameId: '683525f9815326432e6ea8cc',
+      name: 'Horizon forbidden west edited',
+    };
+
+    const result = {
+      name: 'Horizon forbidden west edited',
+      description: 'The second deliver of horizon series for ps5 only',
+      price: 1600,
+      platform: ['playstatiuon 5'],
+      _id: '683525f9815326432e6ea8cc',
+      __v: 0,
+    } as unknown as VideogameDoc;
+
+    jest
+      .spyOn(videogamesService, 'updateVideogame')
+      // eslint-disable-next-line @typescript-eslint/require-await
+      .mockImplementation(async () => result);
+
+    expect(await videogamesController.editVideogame(payload)).toBe(result);
   });
 });
