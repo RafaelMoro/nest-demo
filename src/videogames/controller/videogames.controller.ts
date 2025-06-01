@@ -1,7 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { VideogamesService } from '../services/videogames.service';
-import { CreateVideogameDto } from '../dtos/videogames.dto';
+import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
 
 @Controller('videogames')
 export class VideogamesController {
@@ -12,8 +19,23 @@ export class VideogamesController {
     return this.videogameService.findAllVideogames();
   }
 
+  @Get(':name')
+  async getSingleVideogame(@Param('name') name: string) {
+    return this.videogameService.getSingleVideogame(name);
+  }
+
   @Post()
   async createOneVideogame(@Body() payload: CreateVideogameDto) {
     return this.videogameService.createVideogame(payload);
+  }
+
+  @Put()
+  async editVideogame(@Body() payload: UpdateVideogameDto) {
+    return this.videogameService.updateVideogame(payload);
+  }
+
+  @Delete(':videogameId')
+  async deleteVideogame(@Param('videogameId') videogameId: string) {
+    return this.videogameService.deleteVideogame(videogameId);
   }
 }

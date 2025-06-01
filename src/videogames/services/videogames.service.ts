@@ -3,7 +3,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Videogame } from '../entities/videogames.entity';
+import { Videogame, VideogameDoc } from '../entities/videogames.entity';
 import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
 
 @Injectable()
@@ -12,11 +12,13 @@ export class VideogamesService {
     @InjectModel(Videogame.name) private videogameModel: Model<Videogame>,
   ) {}
 
-  async findAllVideogames() {
+  async findAllVideogames(): Promise<VideogameDoc[]> {
     try {
-      const videogames = await this.videogameModel.find().exec();
+      const videogames: VideogameDoc[] = await this.videogameModel
+        .find()
+        .exec();
       if (!videogames) {
-        return 'No videogames found';
+        return [];
       }
       return videogames;
     } catch (error) {
@@ -24,9 +26,11 @@ export class VideogamesService {
     }
   }
 
-  async getSingleVideogame(name: string) {
+  async getSingleVideogame(name: string): Promise<VideogameDoc | null> {
     try {
-      const videogames = await this.videogameModel.find({ name }).exec();
+      const videogames: VideogameDoc[] = await this.videogameModel
+        .find({ name })
+        .exec();
       if (videogames.length === 0) {
         return null;
       }
@@ -37,20 +41,23 @@ export class VideogamesService {
     }
   }
 
-  async createVideogame(data: CreateVideogameDto) {
+  async createVideogame(data: CreateVideogameDto): Promise<VideogameDoc> {
     try {
       const model = new this.videogameModel(data);
-      const modelSaved = await model.save();
+      const modelSaved: VideogameDoc = await model.save();
       return modelSaved;
     } catch (error) {
       throw new BadRequestException(error.message);
     }
   }
 
-  async updateVideogame(id: string, data: UpdateVideogameDto) {
+  async updateVideogame(
+    data: UpdateVideogameDto,
+  ): Promise<VideogameDoc | null> {
     try {
-      const videogame = await this.videogameModel
-        .findByIdAndUpdate(id, { $set: data }, { new: true })
+      const { videogameId } = data;
+      const videogame: VideogameDoc | null = await this.videogameModel
+        .findByIdAndUpdate(videogameId, { $set: data }, { new: true })
         .exec();
       if (!videogame) {
         return null;
@@ -61,12 +68,11 @@ export class VideogamesService {
     }
   }
 
-  async deleteVideogame(id: string) {
+  async deleteVideogame(id: string): Promise<VideogameDoc | null> {
     try {
-      const videogame = await this.videogameModel.findByIdAndDelete(id).exec();
-      if (!videogame) {
-        return null;
-      }
+      const videogame: VideogameDoc | null = await this.videogameModel
+        .findByIdAndDelete(id)
+        .exec();
       return videogame;
     } catch (error) {
       throw new BadRequestException(error.message);
