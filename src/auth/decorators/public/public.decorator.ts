@@ -1,3 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
 
-export const Public = (...args: string[]) => SetMetadata('public', args);
+process.loadEnvFile();
+const publicKey = process.env.PUBLIC_KEY;
+export const Public = (...args: string[]) => SetMetadata(publicKey, args);
