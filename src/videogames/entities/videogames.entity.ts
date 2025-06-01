@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
@@ -17,6 +14,10 @@ export class Videogame extends Document {
 
   @Prop({ type: [String], required: true })
   platform: string[];
+}
+
+export interface VideogameDoc extends Videogame {
+  _id: unknown;
 }
 
 export const VideogameSchema = SchemaFactory.createForClass(Videogame);
