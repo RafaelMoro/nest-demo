@@ -63,4 +63,15 @@ describe('VideogamesService', () => {
     const response = await service.getSingleVideogame('The last of us');
     expect(response).toBe(result);
   });
+
+  it('getSingleVideogame service should return null if no videogame found', async () => {
+    const result = null;
+
+    jest
+      .spyOn(service, 'getSingleVideogame')
+      // eslint-disable-next-line @typescript-eslint/require-await
+      .mockImplementation(async () => result);
+    const response = await service.getSingleVideogame('The last of us');
+    expect(response).toBe(result);
+  });
 });
