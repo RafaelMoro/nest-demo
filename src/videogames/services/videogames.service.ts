@@ -26,9 +26,11 @@ export class VideogamesService {
     }
   }
 
-  async getSingleVideogame(name: string) {
+  async getSingleVideogame(name: string): Promise<VideogameDoc | null> {
     try {
-      const videogames = await this.videogameModel.find({ name }).exec();
+      const videogames: VideogameDoc[] = await this.videogameModel
+        .find({ name })
+        .exec();
       if (videogames.length === 0) {
         return null;
       }
