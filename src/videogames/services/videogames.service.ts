@@ -51,10 +51,13 @@ export class VideogamesService {
     }
   }
 
-  async updateVideogame(id: string, data: UpdateVideogameDto) {
+  async updateVideogame(
+    data: UpdateVideogameDto,
+  ): Promise<VideogameDoc | null> {
     try {
-      const videogame = await this.videogameModel
-        .findByIdAndUpdate(id, { $set: data }, { new: true })
+      const { videogameId } = data;
+      const videogame: VideogameDoc | null = await this.videogameModel
+        .findByIdAndUpdate(videogameId, { $set: data }, { new: true })
         .exec();
       if (!videogame) {
         return null;
