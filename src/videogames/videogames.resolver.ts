@@ -26,8 +26,7 @@ export class VideogameResolvers {
 
   @Mutation(() => VideogameGqlModel, { name: 'editVideogame', nullable: true })
   async editVideogame(@Args() args: EditVideogameArgs) {
-    const { videogameId } = args;
-    return this.videogameService.updateVideogame(videogameId, args);
+    return this.videogameService.updateVideogame(args);
   }
 
   @Mutation(() => VideogameGqlModel, { name: 'deleteVideogame' })
