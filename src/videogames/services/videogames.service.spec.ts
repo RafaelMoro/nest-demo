@@ -36,6 +36,17 @@ describe('VideogamesService', () => {
     expect(response).toBe(result);
   });
 
+  it('getVideogame service should return a empty array if no videogame found', async () => {
+    const result = [] as unknown as VideogameDoc[];
+
+    jest
+      .spyOn(service, 'findAllVideogames')
+      // eslint-disable-next-line @typescript-eslint/require-await
+      .mockImplementation(async () => result);
+    const response = await service.findAllVideogames();
+    expect(response).toBe(result);
+  });
+
   it('getSingleVideogame service should return a videogame', async () => {
     const result = {
       _id: '68351afb0e685e9fe702e63b',
