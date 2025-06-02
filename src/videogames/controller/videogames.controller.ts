@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {
   Body,
   Controller,
@@ -6,20 +7,28 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+
+import { Public } from '@/auth/decorators/public/public.decorator';
+import { JwtGuard } from '@/auth/guards/jwt-guard/jwt-guard.guard';
 import { VideogamesService } from '../services/videogames.service';
 import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+@UseGuards(JwtGuard)
 @Controller('videogames')
 export class VideogamesController {
   constructor(private videogameService: VideogamesService) {}
 
   @Get()
+  @Public()
   async getAllVideogames() {
     return this.videogameService.findAllVideogames();
   }
 
   @Get(':name')
+  @Public()
   async getSingleVideogame(@Param('name') name: string) {
     return this.videogameService.getSingleVideogame(name);
   }

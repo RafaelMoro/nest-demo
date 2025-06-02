@@ -9,6 +9,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { VideogamesModule } from './videogames/videogames.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 import config from './config';
 
 @Module({
@@ -23,6 +25,8 @@ import config from './config';
         MONGO_PWD: Joi.string().required(),
         MONGO_DB_NAME: Joi.string().required(),
         MONGO_CONNECTION: Joi.string().required(),
+        JWT_KEY: Joi.string().required(),
+        PUBLIC_KEY: Joi.string().required(),
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -32,6 +36,8 @@ import config from './config';
     }),
     DatabaseModule,
     VideogamesModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
