@@ -7,11 +7,16 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+
+import { Public } from '@/auth/decorators/public/public.decorator';
+import { JwtGuard } from '@/auth/guards/jwt-guard/jwt-guard.guard';
 import { VideogamesService } from '../services/videogames.service';
 import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
-import { Public } from '@/auth/decorators/public/public.decorator';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+@UseGuards(JwtGuard)
 @Controller('videogames')
 export class VideogamesController {
   constructor(private videogameService: VideogamesService) {}
