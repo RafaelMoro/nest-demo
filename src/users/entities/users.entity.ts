@@ -22,4 +22,8 @@ export class User extends Document {
   oneTimeToken: string;
 }
 
+export interface UserDoc extends User {
+  _id: unknown;
+}
+
 export const UsersSchema = SchemaFactory.createForClass(User);
