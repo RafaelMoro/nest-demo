@@ -1,3 +1,9 @@
+## v0.4.0 (2025-06-02)
+
+### Pull Requests
+[#4](https://github.com/RafaelMoro/nest-demo/pull/4) | Add auth local and JWT guard
+
+
 ## v0.3.0 (2025-06-01)
 
 ### Pull Requests
