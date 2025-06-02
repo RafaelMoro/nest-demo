@@ -8,7 +8,9 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 
 import { UsersService } from '@/users/services/users.service';
-import { UserDoc } from '@/users/entities/users.entity';
+import { User, UserDoc } from '@/users/entities/users.entity';
+import { generateJWT } from '../auth.utils';
+import { LoginData } from '@/users/users.interface';
 
 @Injectable()
 export class AuthService {
@@ -28,5 +30,14 @@ export class AuthService {
       return rta;
     }
     return null;
+  }
+
+  generateJWTAuth(user: User): LoginData {
+    const accessToken = generateJWT(user, this.jwtService);
+    const loginData: LoginData = {
+      accessToken,
+      user,
+    };
+    return loginData;
   }
 }
