@@ -16,7 +16,7 @@ export class User extends Document {
   lastName: string;
 
   @Prop()
-  middleName: string;
+  hasGoogleLogin: boolean;
 
   @Prop()
   oneTimeToken: string;

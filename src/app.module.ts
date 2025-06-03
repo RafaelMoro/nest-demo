@@ -29,6 +29,8 @@ import config from './config';
         JWT_KEY: Joi.string().required(),
         PUBLIC_KEY: Joi.string().required(),
         NODE_ENV: Joi.string().required(),
+        GOOGLE_CLIENT_ID: Joi.string().required(),
+        GOOGLE_CLIENT_SECRET: Joi.string().required(),
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({

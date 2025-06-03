@@ -1,18 +1,23 @@
-import { Controller, Post, UseGuards, Req, Res } from '@nestjs/common';
+import { Controller, Post, UseGuards, Req, Res, Get } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
 import { AuthService } from '../services/auth.service';
-import { ACCESS_TOKEN_COOKIE_NAME, LOCAL_STRATEGY } from '@/constants';
+import {
+  ACCESS_TOKEN_COOKIE_NAME,
+  LOCAL_STRATEGY,
+  PROD_ENV,
+} from '@/constants';
 import { User } from '@/users/entities/users.entity';
+import { GoogleOAuthGuard } from '../guards/google-guard/google-guard.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @UseGuards(AuthGuard(LOCAL_STRATEGY))
-  @Post()
-  login(
+  @Post('local')
+  loginLocal(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
@@ -21,12 +26,35 @@ export class AuthController {
     const res = this.authService.generateJWTAuth(user);
     response.cookie(ACCESS_TOKEN_COOKIE_NAME, res.accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === PROD_ENV,
       sameSite: 'strict',
       maxAge: 1000 * 60 * 60 * 24 * 5, // 5 days
     });
     return {
       user: res.user,
+    };
+  }
+
+  @Get('google')
+  @UseGuards(GoogleOAuthGuard)
+  async googleAuth(@Req() request: Request) {}
+
+  @Get('google-redirect')
+  @UseGuards(GoogleOAuthGuard)
+  googleAuthRedirect(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const user = request.user;
+    const userData = this.authService.googleLogin(user);
+    response.cookie(ACCESS_TOKEN_COOKIE_NAME, userData.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === PROD_ENV,
+      sameSite: 'strict',
+      maxAge: 1000 * 60 * 60 * 24 * 5, // 5 days
+    });
+    return {
+      user: userData.user,
     };
   }
 }

@@ -1,11 +1,37 @@
-import { User } from './entities/users.entity';
+import { CreateUserDto } from './dtos/users.dto';
 
 export interface CreateUserResponse {
   email: string;
-  sub: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface LoginDataUser {
+  email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface LoginData {
   accessToken: string;
-  user: User;
+  user: LoginDataUser;
+}
+
+export interface CreateUserProps {
+  data: CreateUserDto;
+  skipCheckUser?: boolean;
+}
+
+interface GoogleProfileName {
+  familyName: string;
+  givenName: string;
+}
+
+interface GoogleProfileEmail {
+  value: string;
+  verified: boolean;
+}
+export interface GoogleProfile {
+  name: GoogleProfileName;
+  emails: GoogleProfileEmail[];
 }
