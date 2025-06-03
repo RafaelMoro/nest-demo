@@ -5,7 +5,6 @@ import { ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 
-import { AuthService } from '../services/auth.service';
 import { GOOGLE_STRATEGY } from '@/constants';
 import config from '@/config';
 import { getGoogleCallbackUri } from '../auth.utils';
@@ -15,10 +14,7 @@ export class GoogleStrategy extends PassportStrategy(
   Strategy,
   GOOGLE_STRATEGY,
 ) {
-  constructor(
-    private authService: AuthService,
-    @Inject(config.KEY) configService: ConfigType<typeof config>,
-  ) {
+  constructor(@Inject(config.KEY) configService: ConfigType<typeof config>) {
     super({
       clientID: configService.auth.googleClient ?? '',
       clientSecret: configService.auth.googleClientSecret ?? '',
