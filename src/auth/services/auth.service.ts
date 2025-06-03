@@ -41,7 +41,10 @@ export class AuthService {
     try {
       const userFound = await this.usersService.findByEmail(googleUser.email);
       if (userFound) return userFound;
-      return await this.usersService.createUser(googleUser);
+      return await this.usersService.createUser({
+        data: googleUser,
+        skipCheckUser: true,
+      });
     } catch (error) {
       throw new NotFoundException(
         'Error validating Google user',
@@ -51,13 +54,11 @@ export class AuthService {
     }
   }
 
-  googleLogin(user: Express.User | undefined) {
+  googleLogin(user: Express.User | undefined): LoginData {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    return {
-      message: 'User information from google',
-      user,
-    };
+    const userData = this.generateJWTAuth(user as User);
+    return userData;
   }
 }
