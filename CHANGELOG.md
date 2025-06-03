@@ -1,3 +1,9 @@
+## v0.5.0 (2025-06-03)
+
+### Pull Requests
+[#6](https://github.com/RafaelMoro/nest-demo/pull/6) | Add cookie implemention, DTO validation
+
+
 ## v0.4.0 (2025-06-02)
 
 ### Pull Requests
