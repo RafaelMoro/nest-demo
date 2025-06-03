@@ -1,3 +1,6 @@
+export const DEV_ENV = 'development';
+export const PROD_ENV = 'production';
+
 export const LOCAL_STRATEGY = 'local';
 export const GOOGLE_STRATEGY = 'google';
 export const JWT_STRATEGY = 'jwt';
