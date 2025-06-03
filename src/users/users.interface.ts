@@ -1,5 +1,4 @@
 import { CreateUserDto } from './dtos/users.dto';
-import { User } from './entities/users.entity';
 
 export interface CreateUserResponse {
   email: string;
@@ -7,9 +6,15 @@ export interface CreateUserResponse {
   lastName: string;
 }
 
+export interface LoginDataUser {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
 export interface LoginData {
   accessToken: string;
-  user: User;
+  user: LoginDataUser;
 }
 
 export interface CreateUserProps {
