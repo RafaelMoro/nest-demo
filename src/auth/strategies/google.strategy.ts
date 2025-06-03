@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, VerifyCallback } from 'passport-google-oauth2';
+import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 
 import { AuthService } from '../services/auth.service';
 import { GOOGLE_STRATEGY } from '@/constants';
@@ -19,23 +19,21 @@ export class GoogleStrategy extends PassportStrategy(
     private authService: AuthService,
     @Inject(config.KEY) configService: ConfigType<typeof config>,
   ) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     super({
-      clientID: configService.auth.googleClient,
-      clientSecret: configService.auth.googleClientSecret,
+      clientID: configService.auth.googleClient ?? '',
+      clientSecret: configService.auth.googleClientSecret ?? '',
       callbackURL: getGoogleCallbackUri(configService.env, configService.feUri),
-      // scope: ['email', 'profile'],
+      scope: ['email', 'profile'],
     });
   }
 
-  // TODO: Pendiente
-  async validateGoogle(
+  async validate(
     accessToken: string,
     refreshToken: string,
     profile: any,
     done: VerifyCallback,
   ) {
-    console.log('profile', profile);
+    console.log({ profile });
     const { name, emails, photos } = profile;
     const user = {
       email: emails[0].value,
@@ -45,7 +43,7 @@ export class GoogleStrategy extends PassportStrategy(
       accessToken,
       refreshToken,
     };
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
     done(null, user);
   }
 }
