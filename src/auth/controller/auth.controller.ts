@@ -3,7 +3,11 @@ import { Request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
 import { AuthService } from '../services/auth.service';
-import { ACCESS_TOKEN_COOKIE_NAME, LOCAL_STRATEGY } from '@/constants';
+import {
+  ACCESS_TOKEN_COOKIE_NAME,
+  LOCAL_STRATEGY,
+  PROD_ENV,
+} from '@/constants';
 import { User } from '@/users/entities/users.entity';
 
 @Controller('auth')
@@ -21,7 +25,7 @@ export class AuthController {
     const res = this.authService.generateJWTAuth(user);
     response.cookie(ACCESS_TOKEN_COOKIE_NAME, res.accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === PROD_ENV,
       sameSite: 'strict',
       maxAge: 1000 * 60 * 60 * 24 * 5, // 5 days
     });
