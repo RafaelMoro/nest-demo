@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Req, Res } from '@nestjs/common';
+import { Controller, Post, UseGuards, Req, Res, Get } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -9,14 +9,15 @@ import {
   PROD_ENV,
 } from '@/constants';
 import { User } from '@/users/entities/users.entity';
+import { GoogleOAuthGuard } from '../guards/google-guard/google-guard.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @UseGuards(AuthGuard(LOCAL_STRATEGY))
-  @Post()
-  login(
+  @Post('local')
+  loginLocal(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
@@ -32,5 +33,17 @@ export class AuthController {
     return {
       user: res.user,
     };
+  }
+
+  @Get('google')
+  @UseGuards(GoogleOAuthGuard)
+  async googleAuth(@Req() request: Request) {}
+
+  @Get('google-redirect')
+  @UseGuards(GoogleOAuthGuard)
+  googleAuthRedirect(@Req() request: Request) {
+    console.log('here in google redirect');
+    const user = request.user;
+    return this.authService.googleLogin(user);
   }
 }
