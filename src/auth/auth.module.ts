@@ -10,6 +10,7 @@ import { AuthController } from './controller/auth.controller';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UsersModule } from '@/users/users.module';
 import { JWT_EXPIRE_TIME } from '@/constants';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
   imports: [
@@ -18,19 +19,17 @@ import { JWT_EXPIRE_TIME } from '@/constants';
     JwtModule.registerAsync({
       useFactory: (configServices: ConfigType<typeof config>) => {
         return {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
           secret: configServices.auth.jwtKey ?? '',
           signOptions: {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             expiresIn: JWT_EXPIRE_TIME,
           },
         };
       },
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
       inject: [config.KEY],
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}
