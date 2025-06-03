@@ -41,9 +41,20 @@ export class AuthController {
 
   @Get('google-redirect')
   @UseGuards(GoogleOAuthGuard)
-  googleAuthRedirect(@Req() request: Request) {
-    console.log('here in google redirect');
+  googleAuthRedirect(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     const user = request.user;
-    return this.authService.googleLogin(user);
+    const userData = this.authService.googleLogin(user);
+    response.cookie(ACCESS_TOKEN_COOKIE_NAME, userData.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === PROD_ENV,
+      sameSite: 'strict',
+      maxAge: 1000 * 60 * 60 * 24 * 5, // 5 days
+    });
+    return {
+      user: userData.user,
+    };
   }
 }
