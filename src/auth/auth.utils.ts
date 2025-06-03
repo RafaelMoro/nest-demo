@@ -22,7 +22,7 @@ export const getGoogleCallbackUri = (
     );
   }
   if (env === DEV_ENV) {
-    return 'http://localhost:3000/auth/google-redirect';
+    return 'http://localhost:6006/auth/google-redirect';
   }
   return `${feUri}/auth/google-redirect`;
 };
