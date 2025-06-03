@@ -7,10 +7,9 @@ import { CreateUserDto } from '../dtos/users.dto';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @Public()
   @Post()
   createUser(@Body() payload: CreateUserDto) {
-    return this.usersService.createUser(payload);
+    return this.usersService.createUser({ data: payload });
   }
 }
