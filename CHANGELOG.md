@@ -1,3 +1,9 @@
+## v0.6.0 (2025-06-03)
+
+### Pull Requests
+[#7](https://github.com/RafaelMoro/nest-demo/pull/7) | Add Google auth
+
+
 ## v0.5.0 (2025-06-03)
 
 ### Pull Requests
