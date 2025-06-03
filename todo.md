@@ -3,5 +3,5 @@
 - [x] - Learn how to do unit tests
 - [x] - Test with local and jwt strategy with passport
 - [x] - Apply cookie strategy to save JWT access token
-- [ ] - Learn Google provider with passport
+- [x] - Learn Google provider with passport
 - [ ] - Learn how to protect graphql endpoints using jwt and login
