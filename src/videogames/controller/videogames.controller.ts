@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {
   Body,
   Controller,
@@ -15,7 +14,6 @@ import { JwtGuard } from '@/auth/guards/jwt-guard/jwt-guard.guard';
 import { VideogamesService } from '../services/videogames.service';
 import { CreateVideogameDto, UpdateVideogameDto } from '../dtos/videogames.dto';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 @UseGuards(JwtGuard)
 @Controller('videogames')
 export class VideogamesController {
