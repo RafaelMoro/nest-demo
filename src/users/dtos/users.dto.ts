@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEmail } from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, IsBoolean } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 
 export class CreateUserDto {
@@ -21,6 +21,9 @@ export class CreateUserDto {
 
   @IsString()
   readonly middleName: string;
+
+  @IsBoolean()
+  readonly hasGoogleLogin: boolean;
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
