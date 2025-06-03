@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 
@@ -34,5 +34,15 @@ export class AuthService {
       user,
     };
     return loginData;
+  }
+
+  googleLogin(user: Express.User | undefined) {
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return {
+      message: 'User information from google',
+      user,
+    };
   }
 }
