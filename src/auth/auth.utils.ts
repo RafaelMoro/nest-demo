@@ -1,20 +1,14 @@
 import { JwtService } from '@nestjs/jwt';
-import { Types } from 'mongoose';
 
 import { GenerateJWTUser, PayloadToken } from './auth.interface';
 import { DEV_ENV } from '@/constants';
 
 export const generateJWT = (user: GenerateJWTUser, jwtService: JwtService) => {
-  if (!user._id && !user.sub)
-    throw new Error('User id or user sub does not exist');
-
-  if (user.sub) {
-    const payload: PayloadToken = { sub: user.sub };
-    return jwtService.sign(payload);
-  }
-  const mongoId = user._id as Types.ObjectId;
-  const mongoIdString = mongoId.toString();
-  const payload: PayloadToken = { sub: mongoIdString };
+  const payload: PayloadToken = {
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+  };
   return jwtService.sign(payload);
 };
 

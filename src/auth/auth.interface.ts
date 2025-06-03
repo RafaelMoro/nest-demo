@@ -1,8 +1,11 @@
 export interface PayloadToken {
-  sub: string;
+  email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface GenerateJWTUser {
-  _id?: unknown;
-  sub?: string;
+  email: string;
+  firstName: string;
+  lastName: string;
 }
