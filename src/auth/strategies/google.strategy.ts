@@ -40,7 +40,6 @@ export class GoogleStrategy extends PassportStrategy(
       const currentUser = await this.authService.validateGoogleUser({
         email: emails[0].value as string,
         firstName: name.givenName as string,
-        middleName: '',
         lastName: name.familyName as string,
         password: tempPassword, // Google OAuth does not use a password
         hasGoogleLogin: true,

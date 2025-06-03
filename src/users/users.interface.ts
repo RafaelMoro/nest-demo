@@ -3,7 +3,8 @@ import { User } from './entities/users.entity';
 
 export interface CreateUserResponse {
   email: string;
-  sub: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface LoginData {

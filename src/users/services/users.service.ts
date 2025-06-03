@@ -38,10 +38,11 @@ export class UsersService {
       userModel.password = passwordHashed;
       const modelSaved: UserDoc = await userModel.save();
       const responseCreateUser = modelSaved.toJSON();
-      const { email, _id: sub } = responseCreateUser;
+      const { email, firstName, lastName } = responseCreateUser;
       const response: CreateUserResponse = {
         email,
-        sub,
+        firstName,
+        lastName,
       };
       return response;
     } catch (error) {
