@@ -19,9 +19,6 @@ export class CreateUserDto {
   @IsNotEmpty()
   readonly lastName: string;
 
-  @IsString()
-  readonly middleName: string;
-
   @IsBoolean()
   readonly hasGoogleLogin: boolean;
 }
