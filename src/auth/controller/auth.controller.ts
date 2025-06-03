@@ -1,22 +1,32 @@
-import { Controller, Post, UseGuards, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Post, UseGuards, Req, Res } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
 import { AuthService } from '../services/auth.service';
-import { LOCAL_STRATEGY } from '@/constants';
+import { ACCESS_TOKEN_COOKIE_NAME, LOCAL_STRATEGY } from '@/constants';
 import { User } from '@/users/entities/users.entity';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   @UseGuards(AuthGuard(LOCAL_STRATEGY))
   @Post()
-  login(@Req() request: Request) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  login(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     const user = request.user as User;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.authService.generateJWTAuth(user);
+
+    const res = this.authService.generateJWTAuth(user);
+    response.cookie(ACCESS_TOKEN_COOKIE_NAME, res.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 1000 * 60 * 60 * 24 * 5, // 5 days
+    });
+    return {
+      user: res.user,
+    };
   }
 }
