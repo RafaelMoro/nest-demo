@@ -4,7 +4,6 @@ import {
   IsEmail,
   IsBoolean,
   IsArray,
-  MaxLength,
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 
@@ -27,7 +26,6 @@ export class CreateUserDto {
   readonly lastName: string;
 
   @IsArray()
-  @MaxLength(1, { each: true })
   @IsString({ each: true })
   @IsNotEmpty()
   readonly role: string[];
