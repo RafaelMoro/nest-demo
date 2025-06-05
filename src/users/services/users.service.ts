@@ -29,7 +29,9 @@ export class UsersService {
       //Verify if the user exists with the same email.
       const { email: emailData, role } = data;
       const acceptedRoles: Role[] = ['admin', 'user', 'editor'];
-      const hasAcceptedRole = acceptedRoles.includes(role as Role);
+      const hasAcceptedRole = role.some((r) =>
+        acceptedRoles.includes(r as Role),
+      );
       if (!hasAcceptedRole) {
         throw new BadRequestException('Invalid role');
       }
