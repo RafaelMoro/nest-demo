@@ -1,3 +1,9 @@
+## v0.7.0 (2025-06-05)
+
+### Pull Requests
+[#8](https://github.com/RafaelMoro/nest-demo/pull/8) | Add roles
+
+
 ## v0.6.0 (2025-06-03)
 
 ### Pull Requests
