@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  UnauthorizedException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 
@@ -21,8 +17,8 @@ export class AuthService {
 
   async validatePasswordOfUser(email: string, password: string) {
     const user: UserDoc | null = await this.usersService.findByEmail(email);
-    // If the user has been deleted, return user not found
-    if (!user) return new UnauthorizedException('User not found');
+    // If the user has been deleted, return null where the strategy will throw the exception
+    if (!user) return null;
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
