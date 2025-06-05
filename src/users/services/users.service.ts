@@ -7,7 +7,7 @@ import * as bcrypt from 'bcryptjs';
 
 import { User, UserDoc } from '../entities/users.entity';
 import { USER_EXISTS_ERROR } from '@/constants';
-import { CreateUserProps, CreateUserResponse } from '../users.interface';
+import { CreateUserProps, CreateUserResponse, Role } from '../users.interface';
 
 @Injectable()
 export class UsersService {
@@ -27,7 +27,13 @@ export class UsersService {
   }: CreateUserProps): Promise<CreateUserResponse> {
     try {
       //Verify if the user exists with the same email.
-      const { email: emailData } = data;
+      const { email: emailData, role } = data;
+      const acceptedRoles: Role[] = ['admin', 'user', 'editor'];
+      const hasAcceptedRole = acceptedRoles.includes(role as Role);
+      if (!hasAcceptedRole) {
+        throw new BadRequestException('Invalid role');
+      }
+
       if (!skipCheckUser) {
         const user: UserDoc | null = await this.findByEmail(emailData);
         if (user) throw new BadRequestException(USER_EXISTS_ERROR);
