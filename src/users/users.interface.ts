@@ -1,5 +1,7 @@
 import { CreateUserDto } from './dtos/users.dto';
 
+export type Role = 'admin' | 'user' | 'editor';
+
 export interface CreateUserResponse {
   email: string;
   firstName: string;
