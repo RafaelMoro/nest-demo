@@ -45,7 +45,7 @@ export class GoogleStrategy extends PassportStrategy(
         lastName: name.familyName,
         password: tempPassword, // Google OAuth does not use a password
         hasGoogleLogin: true,
-        role: 'user',
+        role: ['user'],
       });
       done(null, currentUser);
     } catch (error) {
