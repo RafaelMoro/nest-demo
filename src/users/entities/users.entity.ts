@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Role } from '../users.interface';
 
 @Schema()
 export class User extends Document {
@@ -16,7 +17,7 @@ export class User extends Document {
   lastName: string;
 
   @Prop({ required: true })
-  role: string[];
+  role: Role[];
 
   @Prop()
   hasGoogleLogin: boolean;

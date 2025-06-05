@@ -13,6 +13,7 @@ export interface LoginDataUser {
   email: string;
   firstName: string;
   lastName: string;
+  role: Role[];
 }
 
 export interface LoginData {

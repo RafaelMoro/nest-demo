@@ -8,6 +8,7 @@ export const generateJWT = (user: GenerateJWTUser, jwtService: JwtService) => {
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
+    role: user.role,
   };
   return jwtService.sign(payload);
 };

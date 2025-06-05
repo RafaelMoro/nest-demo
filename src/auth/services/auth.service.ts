@@ -30,11 +30,12 @@ export class AuthService {
   }
 
   generateJWTAuth(user: User): LoginData {
-    const { email, firstName, lastName } = user;
+    const { email, firstName, lastName, role } = user;
     const formattedUser: LoginDataUser = {
       email,
       firstName,
       lastName,
+      role,
     };
     const accessToken = generateJWT(user, this.jwtService);
     const loginData: LoginData = {
