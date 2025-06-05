@@ -1,4 +1,10 @@
-import { IsString, IsNotEmpty, IsEmail, IsBoolean } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsEmail,
+  IsBoolean,
+  IsArray,
+} from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 
 export class CreateUserDto {
@@ -18,6 +24,11 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   readonly lastName: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsNotEmpty()
+  readonly role: string[];
 
   @IsBoolean()
   readonly hasGoogleLogin: boolean;
