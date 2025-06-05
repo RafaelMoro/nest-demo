@@ -13,6 +13,7 @@ export default registerAs('config', () => {
     GOOGLE_CLIENT_SECRET,
     NODE_ENV,
     FE_URI,
+    ROLE_KEY,
   } = process.env;
 
   return {
@@ -28,6 +29,7 @@ export default registerAs('config', () => {
       publicKey: PUBLIC_KEY,
       googleClient: GOOGLE_CLIENT_ID,
       googleClientSecret: GOOGLE_CLIENT_SECRET,
+      roleKey: ROLE_KEY,
     },
     env: NODE_ENV,
     feUri: FE_URI,
