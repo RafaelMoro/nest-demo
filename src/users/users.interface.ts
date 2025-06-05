@@ -6,6 +6,7 @@ export interface CreateUserResponse {
   email: string;
   firstName: string;
   lastName: string;
+  role: Role;
 }
 
 export interface LoginDataUser {

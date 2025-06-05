@@ -44,11 +44,17 @@ export class UsersService {
       userModel.password = passwordHashed;
       const modelSaved: UserDoc = await userModel.save();
       const responseCreateUser = modelSaved.toJSON();
-      const { email, firstName, lastName } = responseCreateUser;
+      const {
+        email,
+        firstName,
+        lastName,
+        role: roleResponse,
+      } = responseCreateUser;
       const response: CreateUserResponse = {
         email,
         firstName,
         lastName,
+        role: roleResponse,
       };
       return response;
     } catch (error) {
