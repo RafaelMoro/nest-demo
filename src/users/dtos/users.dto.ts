@@ -6,6 +6,7 @@ import {
   IsArray,
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
+import { Role } from '../users.interface';
 
 export class CreateUserDto {
   @IsString()
@@ -28,7 +29,7 @@ export class CreateUserDto {
   @IsArray()
   @IsString({ each: true })
   @IsNotEmpty()
-  readonly role: string[];
+  readonly role: Role[];
 
   @IsBoolean()
   readonly hasGoogleLogin: boolean;

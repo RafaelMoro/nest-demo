@@ -32,10 +32,9 @@ export class UsersService {
         throw new BadRequestException('Only one role is allowed');
       }
 
+      // Validate the role should be one of the accepted roles.
       const acceptedRoles: Role[] = ['admin', 'user', 'editor'];
-      const hasAcceptedRole = role.some((r) =>
-        acceptedRoles.includes(r as Role),
-      );
+      const hasAcceptedRole = role.some((r) => acceptedRoles.includes(r));
       if (!hasAcceptedRole) {
         throw new BadRequestException('Invalid role');
       }
