@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 
 import config from '@/config';
 import { AuthService } from './services/auth.service';
@@ -17,7 +17,9 @@ import { GoogleStrategy } from './strategies/google.strategy';
     UsersModule,
     PassportModule,
     JwtModule.registerAsync({
-      useFactory: (configServices: ConfigType<typeof config>) => {
+      useFactory: (
+        configServices: ConfigType<typeof config>,
+      ): JwtModuleOptions => {
         return {
           secret: configServices.auth.jwtKey ?? '',
           signOptions: {
