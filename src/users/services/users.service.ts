@@ -28,6 +28,10 @@ export class UsersService {
     try {
       //Verify if the user exists with the same email.
       const { email: emailData, role } = data;
+      if (role.length > 1) {
+        throw new BadRequestException('Only one role is allowed');
+      }
+
       const acceptedRoles: Role[] = ['admin', 'user', 'editor'];
       const hasAcceptedRole = role.some((r) =>
         acceptedRoles.includes(r as Role),
