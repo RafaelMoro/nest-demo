@@ -17,6 +17,7 @@ export class AuthService {
 
   async validatePasswordOfUser(email: string, password: string) {
     const user: UserDoc | null = await this.usersService.findByEmail(email);
+    // If the user has been deleted, return null where the strategy will throw the exception
     if (!user) return null;
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -29,11 +30,12 @@ export class AuthService {
   }
 
   generateJWTAuth(user: User): LoginData {
-    const { email, firstName, lastName } = user;
+    const { email, firstName, lastName, role } = user;
     const formattedUser: LoginDataUser = {
       email,
       firstName,
       lastName,
+      role,
     };
     const accessToken = generateJWT(user, this.jwtService);
     const loginData: LoginData = {

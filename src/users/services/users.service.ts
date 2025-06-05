@@ -7,7 +7,7 @@ import * as bcrypt from 'bcryptjs';
 
 import { User, UserDoc } from '../entities/users.entity';
 import { USER_EXISTS_ERROR } from '@/constants';
-import { CreateUserProps, CreateUserResponse } from '../users.interface';
+import { CreateUserProps, CreateUserResponse, Role } from '../users.interface';
 
 @Injectable()
 export class UsersService {
@@ -27,7 +27,18 @@ export class UsersService {
   }: CreateUserProps): Promise<CreateUserResponse> {
     try {
       //Verify if the user exists with the same email.
-      const { email: emailData } = data;
+      const { email: emailData, role } = data;
+      if (role.length > 1) {
+        throw new BadRequestException('Only one role is allowed');
+      }
+
+      // Validate the role should be one of the accepted roles.
+      const acceptedRoles: Role[] = ['admin', 'user', 'editor'];
+      const hasAcceptedRole = role.some((r) => acceptedRoles.includes(r));
+      if (!hasAcceptedRole) {
+        throw new BadRequestException('Invalid role');
+      }
+
       if (!skipCheckUser) {
         const user: UserDoc | null = await this.findByEmail(emailData);
         if (user) throw new BadRequestException(USER_EXISTS_ERROR);
@@ -38,11 +49,17 @@ export class UsersService {
       userModel.password = passwordHashed;
       const modelSaved: UserDoc = await userModel.save();
       const responseCreateUser = modelSaved.toJSON();
-      const { email, firstName, lastName } = responseCreateUser;
+      const {
+        email,
+        firstName,
+        lastName,
+        role: roleResponse,
+      } = responseCreateUser;
       const response: CreateUserResponse = {
         email,
         firstName,
         lastName,
+        role: roleResponse,
       };
       return response;
     } catch (error) {
