@@ -16,7 +16,7 @@ export class User extends Document {
   lastName: string;
 
   @Prop({ required: true })
-  role: string[];
+  role: string;
 
   @Prop()
   hasGoogleLogin: boolean;
